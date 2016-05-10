@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApplication1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            label1.Text = "Çekilecek Miktar";
+            button1.Text = "Hesapla";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            long para, kalan1, kalan2, kalan3, kalan4, kalan5, kalan6;
+            long ikiyuz, yuz, elli, yirmi, on, bes;
+
+            para = Convert.ToInt64(textBox1.Text);
+            if (para < 0) MessageBox.Show("Para 0 'dan küçük olamaz.");
+            ikiyuz = para / 200;
+            kalan1 = para % 200;
+
+            yuz = kalan1 / 100;
+            kalan2 = kalan1 % 100;
+
+            elli = kalan2 / 50;
+            kalan3 = kalan2 % 50;
+
+            yirmi = kalan3 / 20;
+            kalan4 = kalan3 % 20;
+
+            on = kalan4 / 10;
+            kalan5 = kalan4 % 10;
+
+            bes = kalan5 / 5;
+            kalan6 = kalan5 % 5;
+
+
+
+            if (kalan6 > 0)
+            {
+                MessageBox.Show("Girilen miktar 5 ve 5 'in katı olmalıdır.");
+            }
+            else
+            {
+                MessageBox.Show("200 'lük banknot: " + ikiyuz + Environment.NewLine + "100'lük banknot:" + yuz + Environment.NewLine + "50'lik banknot:" + elli + Environment.NewLine + "20'lik banknot:" + yirmi + Environment.NewLine + "10'luk banknot:" + on + Environment.NewLine + "5'lik banknot:" + bes);
+            }
+        }
+
+       
+    }
+}
