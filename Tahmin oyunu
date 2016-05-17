@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int tahmin, kalan=10, sayi = 54;
+       
+            Console.WriteLine("0 ile 100 arasinda tahmininizi giriniz : ");
+        top:
+            tahmin = Convert.ToInt32(Console.ReadLine());
+            if (kalan > 0)
+            {
+                if (tahmin > sayi)
+                {
+                    kalan--;
+                    Console.WriteLine("Yanlis tahmin yaptiniz. Daha kucuk bir tahmin yapiniz.\n Kalan hakkiniz :"+kalan);
+                    goto top;
+                }
+                else if (tahmin < sayi)
+                {
+                    kalan--;
+                    Console.WriteLine("Yanlis tahmin yaptiniz. Daha buyuk bir tahmin yapiniz.\n Kalan hakkiniz :" + kalan);
+                    goto top;
+                }
+                else
+                {
+                    Console.WriteLine("Tebrikler tahmininiz doğru."+kalan+" hakkiniz kala dogru yaptiniz.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Tahmin Hakkiniz dolmuştur.");
+            }
+            Console.ReadLine();
+        }
+    }
+}
