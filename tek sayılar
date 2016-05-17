@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {//Buradan
+            int n,say=1; //say=0 olursa çiftleri yazar
+            
+            Console.WriteLine("n sayısını giriniz.");
+            n = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("1-"+n+" arasındaki tek sayılar\n------------------");
+            while (say <= n)
+            {
+                Console.WriteLine(say);
+                say += 2; // artış miktarı 2 ile ardışık tek/çift sayılar elde edilir
+            }
+            Console.ReadLine(); // Buraya kadar kopyalayıp yapıştırın.
+        }
+    }
+}
