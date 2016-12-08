@@ -1,0 +1,111 @@
+if($('#profile-comments > *').length > 0) {
+                    var tumunu_sil_btn = $('<div id="tumunu-sil"><input type="submit" class="btn zadane-blue mint-button-secondary--action mint-button-secondary" value="Yorumları sil"></div>').insertBefore('#profile-comments').click(function(){
+                        var sayi = SayiIste('\nKaç yorum silinsin?\nÖrneğin son 1000 yorum ise, 1000 girmen yeterli.');
+                        if(sayi > 0){
+                            if(confirm('\nYorumları silmek istediğinden emin misin?\nGeri dönüşü yoktur.\n')){
+                                var progress = $('#main-right div.progress');
+                                if(progress.length === 0) {
+                                    progress = $('<div class="progress"><br><div class="progress-bar-wrapper"><progress value="0"></progress><span class="progress-value"></span></div></div>').insertAfter(tumunu_sil_btn);
+                                }
+                                var last_comment_id = $('#profile-comments > .comment_box:last').attr('id').match(/\-(\d{1,})/)[1];
+                                var var_olan_comments = $('#profile-comments > .comment_box:nth-child(-n+'+sayi+')');
+                                var silinecekler = var_olan_comments.map(function() {
+                                    return this.id.match(/\-(\d{1,})/)[1];
+                                });
+                                sayi-=10;
+                                if(sayi > 0) {
+                                    $.ajax({
+                                        method: 'POST',
+                                        type: 'POST',
+                                        url: 'http://eodev.com/profile_comments/load_more/'+profileData.id+'/'+last_comment_id+'/'+sayi,
+                                        async: false,
+                                        data: {},
+                                        success: function(response){
+                                            $.merge( silinecekler, $('div.comment_box','<div>'+response+'</div>').map(function() {
+                                                return this.id.match(/\-(\d{1,})/)[1];
+                                            }) );
+                                        }
+                                    });
+                                }
+                                var toplam=silinecekler.length;
+                                $('progress', progress).attr('max', toplam);
+                                var sayy=0;
+                                $.each(silinecekler,function(i,el){
+                                    $.post('http://eodev.com/profile_comments/delete/' + el,{},function(response){
+                                        $('#comment-' + el).remove();
+                                        $('progress', progress).val(i+1);
+                                        currentText= i===(toplam-1) ? 'Tamamlandı > ' + toplam : (i+1)+' - '+toplam;
+                                        $('span.progress-value', progress).text(currentText);
+                                    });
+                                    sayy++;
+                                });
+                                if(sayy===(toplam-1))
+                                    $('span.progress-value', progress).text('Tamamlandı > ' + toplam);
+                                alert2(silinecekler.length + ' adet yorum silindi', 'success');
+                            }
+                        }
+                    });
+                    var load_more_comment_btn = $('#load-more-comments').hide();
+                    $('<span id="load-more-comments" class="pseudolink mint-button-secondary mint-button-secondary--action" zad_user_id="3156614" objecthash="profile.comments.btn.538332900984332"><span class="mint-button-secondary__hole">x adet göster<img src="/img/ajax-loader.gif" style="display:none" alt=""></span></span>').insertAfter(load_more_comment_btn).click(function(){
+                        var This = this;
+                        var sayi = SayiIste('\nKaç yorum gösterilsin?\nÖrneğin son 1000 yorum ise, 1000 girmen yeterli.');
+                        if(sayi > 0){
+                            var last_comment = $('#profile-comments > .comment_box:last');
+                            var last_comment_id = last_comment.attr('id').match(/\-(\d{1,})/)[1];
+                            $('img', This).show();
+                            $.ajax({
+                                method: 'POST',
+                                type: 'POST',
+                                url: 'http://eodev.com/profile_comments/load_more/'+profileData.id+'/'+last_comment_id+'/'+sayi,
+                                async: false,
+                                success: function(response){
+                                    var comments = $(response).insertAfter(last_comment);
+                                    $('span.del-comment', comments).click(function(){
+                                        var This1 = $(this);
+                                        var sil_eylem = $('<span class="del-comment">Kesin mi?<a href="#" class="yes">evet</a>/<a href="#" class="no">hayır</a></span>').insertBefore(This.hide());
+										$('a', sil_eylem).click(function(e){
+                                            e.preventDefault();
+                                            if($(this).is('.yes')){
+                                                var comment = $(this).parents('.comment_box');
+                                                var comment_id =comment.attr('id').match(/\-(\d{1,})/)[1];
+                                                if(comment_id > 0) {
+                                                    $.post('http://eodev.com/profile_comments/delete/' + comment_id,{},function(response){
+                                                        comment.remove();
+                                                    });
+                                                }
+                                            }
+                                            else if($(this).is('.no')){
+                                                This1.show();
+                                                sil_eylem.remove();
+                                            }
+                                        });
+                                    });
+                                    $('img', This).hide();
+									$('<input type="checkbox">').insertAfter('.comments .comment_left');
+                                }
+                            });
+                        }
+                    });
+					var cbox = $('<input type="checkbox">').insertAfter('.comments .comment_left');
+					$('<a>Hepsini seç</a>').insertBefore('#profile-comments').click(function(){
+					cbox.prop('checked',true);
+					});
+                    var secili_sil_btn =$('<div id="secili-sil"><a>Seçili olanları Sil</a></div>').insertAfter('#profile-comments > div:last-child').click(function(){
+                        var inputlar = $('input[type="checkbox"]:checked');
+                        if(inputlar.length > 0) {
+                            if(confirm('\nYorumları silmek istediğinden emin misin?\nGeri dönüşü yoktur.\n')){
+                                var silinecekler = inputlar.map(function(){
+                                    return $(this).parents('.comment_box').attr('id').split('-')[1];
+                                });
+                                $.each(silinecekler,function(i, el){
+                                    $.post('http://eodev.com/profile_comments/delete/' + el,{},function(response){
+                                        $('#comment-' + el).remove();
+                                    });
+                                });
+                                alert2(silinecekler.length + ' adet yorum silindi', 'success');
+                            }
+                        }
+                        else
+                            alert2('En az 1 tane yorum seçmelisin :)','error');
+                    });
+                }
