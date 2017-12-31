@@ -1,0 +1,57 @@
+<?php
+error_reporting(0); // miktar, hata veya sonuçlar boş olduğunda ekrana hata döndürmez. Boş gösterir.
+$miktar = $_POST['miktar'];
+if($miktar){ // Eğer miktar gelmişse bunları yap;
+	if($miktar < 0){ // Girilen miktar negatifse
+		$hata = "Girilen miktar negatif olamaz.";
+	}
+	elseif ($miktar % 5 != 0){ // Eğer girilen miktar 5'in katı değilse;
+		$hata ="Girilen miktar 5 ve 5'in katları olmak zorundadır.";
+	}
+	else{
+		$sonuc_200 = intval($miktar / 200); // 200 'lük banknot sayısı
+		$kalan = $miktar % 200;
+
+		$sonuc_100 = intval($kalan / 100); // 100 'lük banknot sayısı
+		$kalan = $kalan % 100;
+
+		$sonuc_50 = intval($kalan / 50); // 50 'lik banknot sayısı
+		$kalan = $kalan % 50;
+
+		$sonuc_20 = intval($kalan / 20); // 20 'lik banknot sayısı
+		$kalan = $kalan % 20;
+
+		$sonuc_10 = intval($kalan / 10); // 10 'luk banknot sayısı
+		$kalan = $kalan % 10;
+
+		$sonuc_5 = intval($kalan / 5); // 5 'lik banknot sayısı
+		$kalan = $kalan % 5;
+	}
+}
+?>
+<html>
+<head>
+
+</head>
+<body>
+<form action="index.php" method="post">
+	<p style="margin-left: 10px; margin-right: 10px;">Çekilecek para miktarını giriniz;</p>
+	<input type="number" style="margin-left: 10px; margin-right: 10px;" name="miktar" value="<?=$miktar?>">
+	<input type="submit" value="Hesapla">
+</form>
+<div style="margin-left: 10px; margin-right: 10px;"><?=$hata?></div> // Hata varsa bunu yazdırır, yoksa boş döner
+<?php
+if(!$hata && $miktar){?> // Hata yoksa ve miktar gelmişse
+	<div style="margin-left: 10px; margin-right: 10px;">
+		<p>200  'lük banknot : <?=$sonuc_200?></p>
+		<p>100  'lük banknot : <?=$sonuc_100?></p>
+		<p>50   'lik banknot : <?=$sonuc_50?></p>
+		<p>20   'lik banknot : <?=$sonuc_20?></p>
+		<p>10   'luk banknot : <?=$sonuc_10?></p>
+		<p>5    'lik banknot : <?=$sonuc_5?></p>
+	</div>
+<?php
+}
+?>
+</body>
+</html>
