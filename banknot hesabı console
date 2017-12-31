@@ -11,39 +11,38 @@ namespace ConsoleApplication2
 
         static void Main(string[] args)
         {
-            long para, kalan1, kalan2, kalan3, kalan4, kalan5, kalan6;
+            long para, kalan, son_kalan;
             long ikiyuz, yuz, elli, yirmi, on, bes;
 
             top:
-            Console.WriteLine("Çekilecek miktarı giriniz.");
+            Console.WriteLine("Çekilecek miktarı giriniz. \n");
             para = Convert.ToInt64(Console.ReadLine());
             if (para < 0) {
-                Console.WriteLine("Girdiğiniz para miktarı negatif olamaz.");
+                Console.WriteLine("Girdiğiniz para miktarı negatif olamaz. \n");
                 goto top;
             }
-            ikiyuz = para / 200;
-            kalan1 = para % 200;
-
-            yuz = kalan1 / 100;
-            kalan2 = kalan1 % 100;
-
-            elli = kalan2 / 50;
-            kalan3 = kalan2 % 50;
-
-            yirmi = kalan3 / 20;
-            kalan4 = kalan3 % 20;
-
-            on = kalan4 / 10;
-            kalan5 = kalan4 % 10;
-
-            bes = kalan5 / 5;
-            kalan6 = kalan5 % 5;
-
-            if (kalan6 > 0)
+            
+            if (para % 5 != 0) // Paranın 5 'in katı olup olmadığı kontrolü
             {
-                Console.WriteLine("Girilen miktar 5 ve 5 'in katı olmalıdır.");
+                Console.WriteLine("Girilen miktar 5 ve 5 'in katı olmalıdır.\n");
                 goto top;
             }
+            ikiyuz = para / 200; // 200 'lük para miktarı
+            kalan = para % 200; // 200 'lük para miktarından kalan
+
+            yuz = kalan1 / 100; // 100 'lük para miktarı
+            kalan = kalan % 100; // 100 'lük para miktarından kalan
+
+            elli = kalan2 / 50; // 50 'lik para miktarı
+            kalan = kalan % 50; // 50 'lik para miktarından kalan
+
+            yirmi = kalan3 / 20; // 20 'lik para miktarı
+            kalan = kalan % 20; // 20 'lik para miktarından kalan
+
+            on = kalan4 / 10; // 10 'luk para miktarı
+            kalan = kalan % 10; // 10 'luk para miktarından kalan
+
+            bes = kalan5 / 5; // 5 'lik para miktarı
 
             else
             {
