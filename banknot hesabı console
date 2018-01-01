@@ -11,39 +11,38 @@ namespace ConsoleApplication2
 
         static void Main(string[] args)
         {
-            long para, kalan1, kalan2, kalan3, kalan4, kalan5, kalan6;
+            long para, kalan;
             long ikiyuz, yuz, elli, yirmi, on, bes;
 
             top:
             Console.WriteLine("Çekilecek miktarı giriniz.");
             para = Convert.ToInt64(Console.ReadLine());
-            if (para < 0) {
+            if (para < 0) { // Para negatifse
                 Console.WriteLine("Girdiğiniz para miktarı negatif olamaz.");
                 goto top;
             }
-            ikiyuz = para / 200;
-            kalan1 = para % 200;
 
-            yuz = kalan1 / 100;
-            kalan2 = kalan1 % 100;
-
-            elli = kalan2 / 50;
-            kalan3 = kalan2 % 50;
-
-            yirmi = kalan3 / 20;
-            kalan4 = kalan3 % 20;
-
-            on = kalan4 / 10;
-            kalan5 = kalan4 % 10;
-
-            bes = kalan5 / 5;
-            kalan6 = kalan5 % 5;
-
-            if (kalan6 > 0)
+            if (para % 5 != 0) // Para 5'in katı değilse
             {
                 Console.WriteLine("Girilen miktar 5 ve 5 'in katı olmalıdır.");
                 goto top;
             }
+            ikiyuz = para / 200; // 200 'lük banknot sayısı
+            kalan = para % 200; // 200 'lük banknotlardan geriye kalan para
+
+            yuz = kalan / 100; // 100 'lük banknot sayısı
+            kalan = kalan % 100; // 100 'lük banknotlardan geriye kalan para
+
+            elli = kalan / 50; // 50 'lik banknot sayısı
+            kalan = kalan % 50; // 50 'lik banknotlardan geriye kalan para
+
+            yirmi = kalan / 20; // 20 'lik banknot sayısı
+            kalan = kalan % 20; // 20 'lik banknotlardan geriye kalan para
+
+            on = kalan / 10; // 10 'luk banknot sayısı
+            kalan = kalan % 10; // 10 'luk banknotlardan geriye kalan para
+
+            bes = kalan / 5; // 5 'lik banknot sayısı
 
             else
             {
